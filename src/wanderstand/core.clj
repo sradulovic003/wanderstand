@@ -16,6 +16,9 @@
     stands))
 
 
+(defn apply-to-bazaar [bazaar vendor-id]
+  (update bazaar :applicants conj vendor-id))
+
 
 
 

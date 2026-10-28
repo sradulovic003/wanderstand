@@ -24,3 +24,12 @@
                   (post-stand {:vendor-id 2 :address "Zmaj Jovina 3" :city "Novi Sad" :category :ceramics :from "10:00" :to "17:00"})]]
       (is (= 1 (count (search-stands stands "Beograd"))))
       (is (= 0 (count (search-stands stands "Nis")))))))
+
+
+
+(deftest test-apply-to-bazaar
+  (testing "Vendor applies to a bazaar"
+    (let [bazaar {:name "Beograd Bazar"
+                  :applicants []}]
+      (let [result (apply-to-bazaar bazaar 1)]
+        (is (= [1] (:applicants result)))))))
