@@ -1,6 +1,13 @@
 (ns wanderstand.core)
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+(defn post-stand [stand-data]
+  { :vendor-id (:vendor-id stand-data)
+    :location (:location stand-data)
+    :category (:category stand-data)
+    :from (:from stand-data)
+    :to (:to stand-data)
+   }
+  )
+
+
+
