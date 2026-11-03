@@ -18,6 +18,7 @@
 
 (fact "Vendor can apply to a bazaar"
       (let [bazaar {:name "Beograd Bazar"
+                    :status :open
                     :applicants []}]
         (let [result (apply-to-bazaar bazaar 1)]
           (:applicants result) => [1])))
