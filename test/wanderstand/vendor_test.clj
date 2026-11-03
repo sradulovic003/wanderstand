@@ -22,3 +22,18 @@
                     :applicants []}]
         (let [result (apply-to-bazaar bazaar 1)]
           (:applicants result) => [1])))
+
+
+(fact "Stand with valid data is valid"
+      (valid-stand? {:vendor-id 1
+                     :address "Knez Mihailova 15"
+                     :city "Beograd"
+                     :category :jewelry
+                     :from "09:00"
+                     :to "18:00"}) => true)
+
+(fact "Vendor cannot apply to a closed bazaar"
+      (let [bazaar {:name "Beograd Bazar"
+                    :status :closed
+                    :applicants []}]
+        (apply-to-bazaar bazaar 1) => nil))
