@@ -1,6 +1,7 @@
 (ns wanderstand.vendor-test
   (:require [midje.sweet :refer :all]
-            [wanderstand.vendor :refer :all]))
+            [wanderstand.vendor :refer :all]
+            [wanderstand.bazaar :refer :all]))
 
 
 (fact "Vendor can post a stand"

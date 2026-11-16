@@ -1,6 +1,7 @@
 (ns wanderstand.organizer-test
   (:require [midje.sweet :refer :all]
-            [wanderstand.organizer :refer :all]))
+            [wanderstand.organizer :refer :all]
+            [wanderstand.bazaar :refer :all]))
 
 (fact "Organizer can open a bazaar"
       (let [bazaar-data {:name "Beograd Bazar"
