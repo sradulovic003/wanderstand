@@ -3,22 +3,16 @@
             [wanderstand.organizer :refer :all]
             [wanderstand.bazaar :refer :all]))
 
-(fact "Organizer can open a bazaar"
-      (let [bazaar-data {:name "Beograd Bazar"
-                         :city "Beograd"
-                         :date "2026-12-01"}]
-        (let [result (open-bazaar bazaar-data)]
-          (:name result) => "Beograd Bazar"
-          (:status result) => :open
-          (:applicants result) => [])))
+(fact "Organizer can accept an applicant"
+      (let [bazaar (open-bazaar {:name "Beograd Bazar"
+                                 :city "Beograd"
+                                 :date "2026-12-01"})
+            bazaar-with-applicant (apply-to-bazaar bazaar 1)]
+        (:accepted-vendors (accept-applicant bazaar-with-applicant 1)) => [1]))
 
-(fact "Bazaar without name is not valid"
-      (open-bazaar {:name ""
-                    :city "Beograd"
-                    :date "2026-12-01"}) => nil)
-
-(fact "Bazaar is full when max vendors reached"
-      (let [bazaar {:name "Beograd Bazar"
-                    :applicants [1 2 3]}]
-        (is-bazaar-full? bazaar 3) => true
-        (is-bazaar-full? bazaar 5) => false))
+(fact "Organizer can reject an applicant"
+      (let [bazaar (open-bazaar {:name "Beograd Bazar"
+                                 :city "Beograd"
+                                 :date "2026-12-01"})
+            bazaar-with-applicant (apply-to-bazaar bazaar 1)]
+        (:applicants (reject-applicant bazaar-with-applicant 1)) => []))

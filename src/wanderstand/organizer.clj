@@ -1,4 +1,9 @@
 (ns wanderstand.organizer)
 
-(defn is-bazaar-full? [bazaar max-vendors]
-  (>= (count (:applicants bazaar)) max-vendors))
+(defn accept-applicant [bazaar vendor-id]
+  (update bazaar :accepted-vendors conj vendor-id))
+
+(defn reject-applicant [bazaar vendor-id]
+  (update bazaar :applicants
+          (fn [applicants]
+            (vec (filter #(not= % vendor-id) applicants)))))
