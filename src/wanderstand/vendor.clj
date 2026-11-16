@@ -1,17 +1,16 @@
 (ns wanderstand.vendor)
 
-
 (defn valid-stand? [stand-data]
-  (and (not (nil? (:vendor-id stand-data)))
-       (not (empty? (:city stand-data)))
-       (not (empty? (:address stand-data)))
-       (not (nil? (:category stand-data)))
-       (not (empty? (:from stand-data)))
-       (not (empty? (:to stand-data)))))
+  (boolean (and (some? (:vendor-id stand-data))
+                (seq (:city stand-data))
+                (seq (:address stand-data))
+                (some? (:category stand-data))
+                (seq (:from stand-data))
+                (seq (:to stand-data)))))
 
 (defn post-stand [stand-data]
   (if (valid-stand? stand-data)
-    { :vendor-id (:vendor-id stand-data)
+    {:vendor-id (:vendor-id stand-data)
      :address (:address stand-data)
      :city (:city stand-data)
      :category (:category stand-data)

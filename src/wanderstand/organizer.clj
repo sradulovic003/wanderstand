@@ -1,9 +1,9 @@
 (ns wanderstand.organizer)
 
 (defn valid-bazaar? [bazaar-data]
-  (and (not (empty? (:name bazaar-data)))
-       (not (empty? (:city bazaar-data)))
-       (not (empty? (:date bazaar-data)))))
+  (boolean (and (seq (:name bazaar-data))
+                (seq (:city bazaar-data))
+                (seq (:date bazaar-data)))))
 
 (defn open-bazaar [bazaar-data]
   (if (valid-bazaar? bazaar-data)
