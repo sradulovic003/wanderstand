@@ -17,7 +17,7 @@
 (defn apply-to-bazaar [bazaar vendor-id]
   (if (= (:status bazaar) :open)
     (update bazaar :applicants conj vendor-id)
-    nil))
+    bazaar))
 
 (defn close-bazaar [bazaar]
   (if (= (:status bazaar) :open)

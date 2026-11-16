@@ -37,4 +37,4 @@
       (let [bazaar {:name "Beograd Bazar"
                     :status :closed
                     :applicants []}]
-        (apply-to-bazaar bazaar 1) => nil))
+        (apply-to-bazaar bazaar 1) => bazaar))
