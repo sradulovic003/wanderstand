@@ -21,8 +21,7 @@
       (add-bazaar! {:name ""
                     :city "Beograd"
                     :date "2026-12-01"
-                    :max-vendors 10})
-      (count (get-all-bazaars)) => 0)
+                    :max-vendors 10}) => (throws clojure.lang.ExceptionInfo "Bazaar name is required"))
 
 (fact "Bazaar can be found by name"
       (reset-store!)
