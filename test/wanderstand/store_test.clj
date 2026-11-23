@@ -11,7 +11,8 @@
       (reset-store!)
       (add-bazaar! {:name "Beograd Bazar"
                     :city "Beograd"
-                    :date "2026-12-01"})
+                    :date "2026-12-01"
+                    :max-vendors 10})
       (count (get-all-bazaars)) => 1
       (:name (first (get-all-bazaars))) => "Beograd Bazar")
 
@@ -19,14 +20,16 @@
       (reset-store!)
       (add-bazaar! {:name ""
                     :city "Beograd"
-                    :date "2026-12-01"})
+                    :date "2026-12-01"
+                    :max-vendors 10})
       (count (get-all-bazaars)) => 0)
 
 (fact "Bazaar can be found by name"
       (reset-store!)
       (add-bazaar! {:name "Beograd Bazar"
                     :city "Beograd"
-                    :date "2026-12-01"})
+                    :date "2026-12-01"
+                    :max-vendors 10})
       (:name (find-bazaar "Beograd Bazar")) => "Beograd Bazar"
       (find-bazaar "Novi Sad Bazar") => nil)
 

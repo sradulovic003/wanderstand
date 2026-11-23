@@ -18,4 +18,9 @@
      :to (:to stand-data)}
     nil))
 
+(defn get-vendor-stands [stands vendor-id]
+  (filter (fn [stand]
+            (= (:vendor-id stand) vendor-id))
+          stands))
+
 

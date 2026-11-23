@@ -20,6 +20,7 @@
 (fact "Vendor can apply to a bazaar"
       (let [bazaar {:name "Beograd Bazar"
                     :status :open
+                    :max-vendors 10
                     :applicants []}]
         (let [result (apply-to-bazaar bazaar 1)]
           (:applicants result) => [1])))
@@ -36,5 +37,22 @@
 (fact "Vendor cannot apply to a closed bazaar"
       (let [bazaar {:name "Beograd Bazar"
                     :status :closed
+                    :max-vendors 10
                     :applicants []}]
         (apply-to-bazaar bazaar 1) => bazaar))
+
+(fact "Vendor can see their own stands"
+      (let [stands [(post-stand {:vendor-id 1
+                                 :address "Knez Mihailova 15"
+                                 :city "Beograd"
+                                 :category :jewelry
+                                 :from "09:00"
+                                 :to "18:00"})
+                    (post-stand {:vendor-id 2
+                                 :address "Zmaj Jovina 3"
+                                 :city "Novi Sad"
+                                 :category :ceramics
+                                 :from "10:00"
+                                 :to "17:00"})]]
+        (count (get-vendor-stands stands 1)) => 1
+        (:address (first (get-vendor-stands stands 1))) => "Knez Mihailova 15"))
