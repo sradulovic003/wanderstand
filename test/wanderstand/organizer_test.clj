@@ -36,11 +36,10 @@
                                  :city "Beograd"
                                  :date "2026-12-01"
                                  :max-vendors 2})
-            bazaar-with-two (-> bazaar
-                                (apply-to-bazaar 1)
-                                (apply-to-bazaar 2))
-            bazaar-accepted (accept-applicant bazaar-with-two 1)
-            bazaar-accepted-2 (accept-applicant bazaar-accepted 2)]
+            bazaar-with-one (apply-to-bazaar bazaar 1)
+            bazaar-with-two (apply-to-bazaar bazaar-with-one 2)
+            bazaar-accepted-1 (accept-applicant bazaar-with-two 1)
+            bazaar-accepted-2 (accept-applicant bazaar-accepted-1 2)]
         (accept-applicant bazaar-accepted-2 3) => (throws clojure.lang.ExceptionInfo "Bazaar is full")))
 
 (fact "Cannot accept vendor not in applicants list"
