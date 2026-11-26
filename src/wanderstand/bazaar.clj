@@ -37,5 +37,5 @@
   (if (some (fn [id] (= id vendor-id)) (:applicants bazaar))
     (update bazaar :applicants
             (fn [applicants]
-              (vec (filter #(not= % vendor-id) applicants))))
+              (vec (filter (fn [id] (not= id vendor-id)) applicants))))
     (throw (ex-info "Vendor is not in the applicants list" {:type :not-found-error}))))
