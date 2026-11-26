@@ -28,6 +28,11 @@
       (post-stand {:vendor-id 1 :address "Knez Mihailova 15" :city "Beograd" :category :jewelry :from "18:00" :to "09:00"}) => (throws clojure.lang.ExceptionInfo "From time must be before to time and cannot be equal")
       (post-stand {:vendor-id 1 :address "Knez Mihailova 15" :city "Beograd" :category :jewelry :from "09:00" :to "09:00"}) => (throws clojure.lang.ExceptionInfo "From time must be before to time and cannot be equal"))
 
+(fact "Stand with invalid time format throws exception"
+      (post-stand {:vendor-id 1 :address "Knez Mihailova 15" :city "Beograd" :category :jewelry :from "9:00" :to "18:00"}) => (throws clojure.lang.ExceptionInfo "From time must be in HH:MM format")
+      (post-stand {:vendor-id 1 :address "Knez Mihailova 15" :city "Beograd" :category :jewelry :from "ab:cd" :to "18:00"}) => (throws clojure.lang.ExceptionInfo "From time must be in HH:MM format")
+      (post-stand {:vendor-id 1 :address "Knez Mihailova 15" :city "Beograd" :category :jewelry :from "09:00" :to "25:00"}) => (throws clojure.lang.ExceptionInfo "To time must be in HH:MM format"))
+
 (fact "Vendor can see their own stands"
       (let [stand-1 (post-stand {:vendor-id 1
                                  :address "Knez Mihailova 15"

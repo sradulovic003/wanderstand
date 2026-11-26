@@ -1,7 +1,17 @@
-(ns wanderstand.vendor)
+(ns wanderstand.vendor
+  (:import [java.time LocalTime]))
+
+(defn valid-time-format? [time]
+  (try
+    (LocalTime/parse time)
+    true
+    (catch Exception e
+      false)))
 
 (defn valid-time-range? [from to]
-  (< (compare from to) 0))
+  (let [from-time (LocalTime/parse from)
+        to-time (LocalTime/parse to)]
+    (.isBefore from-time to-time)))
 
 (defn valid-stand? [stand-data]
   (cond
@@ -11,6 +21,8 @@
     (nil? (:category stand-data)) (throw (ex-info "Category is required" {:type :validation-error}))
     (not (seq (:from stand-data))) (throw (ex-info "From time is required" {:type :validation-error}))
     (not (seq (:to stand-data))) (throw (ex-info "To time is required" {:type :validation-error}))
+    (not (valid-time-format? (:from stand-data))) (throw (ex-info "From time must be in HH:MM format" {:type :validation-error}))
+    (not (valid-time-format? (:to stand-data))) (throw (ex-info "To time must be in HH:MM format" {:type :validation-error}))
     (not (valid-time-range? (:from stand-data) (:to stand-data))) (throw (ex-info "From time must be before to time and cannot be equal" {:type :validation-error}))
     :else true))
 
