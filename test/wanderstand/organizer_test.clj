@@ -18,8 +18,9 @@
                                  :city "Beograd"
                                  :date "2026-12-01"
                                  :max-vendors 10})
-            bazaar-with-applicant (apply-to-bazaar bazaar 1)]
-        (:applicants (reject-applicant bazaar-with-applicant 1)) => []))
+            bazaar-with-applicant (apply-to-bazaar bazaar 1)
+            result (reject-applicant bazaar-with-applicant 1)]
+        (:applicants result) => []))
 
 (fact "Cannot accept vendor in closed bazaar"
       (let [bazaar (open-bazaar {:name "Beograd Bazar"

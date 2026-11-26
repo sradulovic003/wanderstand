@@ -3,15 +3,17 @@
             [wanderstand.bazaar :refer :all]))
 
 (fact "Organizer can open a bazaar"
-      (let [bazaar-data {:name "Beograd Bazar"
-                         :city "Beograd"
-                         :date "2026-12-01"
-                         :max-vendors 10}]
-        (let [result (open-bazaar bazaar-data)]
-          (:name result) => "Beograd Bazar"
-          (:status result) => :open
-          (:applicants result) => []
-          (:accepted-vendors result) => [])))
+      (let [result (open-bazaar {:name "Beograd Bazar"
+                                 :city "Beograd"
+                                 :date "2026-12-01"
+                                 :max-vendors 10})]
+        (:name result) => "Beograd Bazar"
+        (:city result) => "Beograd"
+        (:date result) => "2026-12-01"
+        (:max-vendors result) => 10
+        (:status result) => :open
+        (:applicants result) => []
+        (:accepted-vendors result) => []))
 
 (fact "Bazaar with missing fields throws exception"
       (open-bazaar {:name "" :city "Beograd" :date "2026-12-01" :max-vendors 10}) => (throws clojure.lang.ExceptionInfo "Bazaar name is required")
@@ -24,8 +26,9 @@
       (let [bazaar (open-bazaar {:name "Beograd Bazar"
                                  :city "Beograd"
                                  :date "2026-12-01"
-                                 :max-vendors 10})]
-        (:status (close-bazaar bazaar)) => :closed))
+                                 :max-vendors 10})
+            result (close-bazaar bazaar)]
+        (:status result) => :closed))
 
 (fact "Closing already closed bazaar throws exception"
       (let [bazaar (open-bazaar {:name "Beograd Bazar"
@@ -39,8 +42,9 @@
       (let [bazaar (open-bazaar {:name "Beograd Bazar"
                                  :city "Beograd"
                                  :date "2026-12-01"
-                                 :max-vendors 10})]
-        (:applicants (apply-to-bazaar bazaar 1)) => [1]))
+                                 :max-vendors 10})
+            result (apply-to-bazaar bazaar 1)]
+        (:applicants result) => [1]))
 
 (fact "Vendor cannot apply to a closed bazaar"
       (let [bazaar (open-bazaar {:name "Beograd Bazar"
@@ -65,8 +69,9 @@
                                  :city "Beograd"
                                  :date "2026-12-01"
                                  :max-vendors 10})
-            bazaar-with-applicant (apply-to-bazaar bazaar 1)]
-        (:applicants (remove-applicant bazaar-with-applicant 1)) => []))
+            bazaar-with-applicant (apply-to-bazaar bazaar 1)
+            result (remove-applicant bazaar-with-applicant 1)]
+        (:applicants result) => []))
 
 (fact "Removing non-existing applicant throws exception"
       (let [bazaar (open-bazaar {:name "Beograd Bazar"
@@ -74,11 +79,3 @@
                                  :date "2026-12-01"
                                  :max-vendors 10})]
         (remove-applicant bazaar 1) => (throws clojure.lang.ExceptionInfo "Vendor is not in the applicants list")))
-
-(fact "Bazaar has max vendors limit"
-      (let [bazaar (open-bazaar {:name "Beograd Bazar"
-                                 :city "Beograd"
-                                 :date "2026-12-01"
-                                 :max-vendors 2})]
-        (:max-vendors bazaar) => 2))
-

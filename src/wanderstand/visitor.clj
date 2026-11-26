@@ -6,7 +6,6 @@
                        stands)]
     (cond
       (not (seq city)) (throw (ex-info "City is required" {:type :validation-error}))
-      (empty? result) (throw (ex-info "No stands found in this city" {:type :not-found-error}))
       :else result)))
 
 (defn search-stands-by-category [stands category]
@@ -15,7 +14,6 @@
                        stands)]
     (cond
       (nil? category) (throw (ex-info "Category is required" {:type :validation-error}))
-      (empty? result) (throw (ex-info "No stands found in this category" {:type :not-found-error}))
       :else result)))
 
 (defn get-stand-details [stands vendor-id]

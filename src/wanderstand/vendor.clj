@@ -27,8 +27,6 @@
   (let [result (filter (fn [stand]
                          (= (:vendor-id stand) vendor-id))
                        stands)]
-    (if (empty? result)
-      (throw (ex-info "No stands found for this vendor" {:type :not-found-error}))
-      result)))
-
-
+    (cond
+      (nil? vendor-id) (throw (ex-info "Vendor id is required" {:type :validation-error}))
+      :else result)))

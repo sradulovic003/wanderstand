@@ -32,7 +32,7 @@
         (search-stands stands "") => (throws clojure.lang.ExceptionInfo "City is required")
         (search-stands stands nil) => (throws clojure.lang.ExceptionInfo "City is required")))
 
-(fact "Search stands in city with no stands throws exception"
+(fact "Search stands in city with no stands returns empty list"
       (let [stand-1 (post-stand {:vendor-id 1
                                  :address "Knez Mihailova 15"
                                  :city "Beograd"
@@ -40,7 +40,7 @@
                                  :from "09:00"
                                  :to "18:00"})
             stands [stand-1]]
-        (search-stands stands "Nis") => (throws clojure.lang.ExceptionInfo "No stands found in this city")))
+        (search-stands stands "Nis") => []))
 
 (fact "Visitor can search stands by category"
       (let [stand-1 (post-stand {:vendor-id 1
@@ -70,7 +70,7 @@
             stands [stand-1]]
         (search-stands-by-category stands nil) => (throws clojure.lang.ExceptionInfo "Category is required")))
 
-(fact "Search stands in category with no stands throws exception"
+(fact "Search stands in category with no stands returns empty list"
       (let [stand-1 (post-stand {:vendor-id 1
                                  :address "Knez Mihailova 15"
                                  :city "Beograd"
@@ -78,7 +78,7 @@
                                  :from "09:00"
                                  :to "18:00"})
             stands [stand-1]]
-        (search-stands-by-category stands :ceramics) => (throws clojure.lang.ExceptionInfo "No stands found in this category")))
+        (search-stands-by-category stands :ceramics) => []))
 
 (fact "Visitor can get stand details"
       (let [stand-1 (post-stand {:vendor-id 1
