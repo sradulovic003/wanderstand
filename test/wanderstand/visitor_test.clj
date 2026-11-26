@@ -81,35 +81,58 @@
         (search-stands-by-category stands :ceramics) => []))
 
 (fact "Visitor can get stand details"
-      (let [stand-1 (post-stand {:vendor-id 1
+      (let [stand-1 (post-stand {:id 1
+                                 :vendor-id 1
                                  :address "Knez Mihailova 15"
                                  :city "Beograd"
                                  :category :jewelry
                                  :from "09:00"
                                  :to "18:00"})
-            stand-2 (post-stand {:vendor-id 2
+            stand-2 (post-stand {:id 2
+                                 :vendor-id 2
                                  :address "Zmaj Jovina 3"
                                  :city "Novi Sad"
                                  :category :ceramics
                                  :from "10:00"
                                  :to "17:00"})
             stands [stand-1 stand-2]
-            result (get-stand-details stands 1)]
-        (:address result) => "Knez Mihailova 15"
-        (:city result) => "Beograd"))
+            result (get-stand-details stands 2)]
+        (:address result) => "Zmaj Jovina 3"
+        (:city result) => "Novi Sad"))
 
-(fact "Get stand details without vendor id throws exception"
-      (let [stand-1 (post-stand {:vendor-id 1
+(fact "Same vendor can have two stands"
+      (let [stand-1 (post-stand {:id 1
+                                 :vendor-id 1
+                                 :address "Knez Mihailova 15"
+                                 :city "Beograd"
+                                 :category :jewelry
+                                 :from "09:00"
+                                 :to "18:00"})
+            stand-2 (post-stand {:id 2
+                                 :vendor-id 1
+                                 :address "Zmaj Jovina 3"
+                                 :city "Novi Sad"
+                                 :category :jewelry
+                                 :from "10:00"
+                                 :to "17:00"})
+            stands [stand-1 stand-2]
+            result (get-stand-details stands 2)]
+        (:address result) => "Zmaj Jovina 3"))
+
+(fact "Get stand details without stand id throws exception"
+      (let [stand-1 (post-stand {:id 1
+                                 :vendor-id 1
                                  :address "Knez Mihailova 15"
                                  :city "Beograd"
                                  :category :jewelry
                                  :from "09:00"
                                  :to "18:00"})
             stands [stand-1]]
-        (get-stand-details stands nil) => (throws clojure.lang.ExceptionInfo "Vendor id is required")))
+        (get-stand-details stands nil) => (throws clojure.lang.ExceptionInfo "Stand id is required")))
 
 (fact "Get details of non-existing stand throws exception"
-      (let [stand-1 (post-stand {:vendor-id 1
+      (let [stand-1 (post-stand {:id 1
+                                 :vendor-id 1
                                  :address "Knez Mihailova 15"
                                  :city "Beograd"
                                  :category :jewelry

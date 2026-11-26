@@ -5,28 +5,36 @@
 (def store (atom {:bazaars []
                   :stands []}))
 
+(defn next-id [items]
+  (inc (count items)))
+
 (defn get-all-bazaars []
   (:bazaars @store))
 
 (defn add-bazaar! [bazaar-data]
-  (let [new-bazaar (bazaar/open-bazaar bazaar-data)]
-    (if new-bazaar
-      (swap! store update :bazaars conj new-bazaar)
-      nil)))
+  (let [id (next-id (:bazaars @store))
+        new-bazaar (bazaar/open-bazaar (assoc bazaar-data :id id))]
+    (swap! store update :bazaars conj new-bazaar)
+    new-bazaar))
 
-(defn find-bazaar [name]
+(defn find-bazaar [id]
   (first (filter (fn [bazaar]
-                   (= (:name bazaar) name))
+                   (= (:id bazaar) id))
                  (:bazaars @store))))
 
 (defn add-stand! [stand-data]
-  (let [new-stand (vendor/post-stand stand-data)]
-    (if new-stand
-      (swap! store update :stands conj new-stand)
-      nil)))
+  (let [id (next-id (:stands @store))
+        new-stand (vendor/post-stand (assoc stand-data :id id))]
+    (swap! store update :stands conj new-stand)
+    new-stand))
 
 (defn get-all-stands []
   (:stands @store))
+
+(defn find-stand [id]
+  (first (filter (fn [stand]
+                   (= (:id stand) id))
+                 (:stands @store))))
 
 (defn reset-store! []
   (reset! store {:bazaars []

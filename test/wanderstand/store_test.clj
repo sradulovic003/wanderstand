@@ -23,14 +23,19 @@
                     :date "2026-12-01"
                     :max-vendors 10}) => (throws clojure.lang.ExceptionInfo "Bazaar name is required"))
 
-(fact "Bazaar can be found by name"
+(fact "Bazaars get ids and can be found by id"
       (reset-store!)
       (add-bazaar! {:name "Beograd Bazar"
                     :city "Beograd"
                     :date "2026-12-01"
                     :max-vendors 10})
-      (:name (find-bazaar "Beograd Bazar")) => "Beograd Bazar"
-      (find-bazaar "Novi Sad Bazar") => nil)
+      (add-bazaar! {:name "Novi Sad Bazar"
+                    :city "Novi Sad"
+                    :date "2026-12-05"
+                    :max-vendors 5})
+      (:name (find-bazaar 1)) => "Beograd Bazar"
+      (:name (find-bazaar 2)) => "Novi Sad Bazar"
+      (find-bazaar 3) => nil)
 
 (fact "Stand can be added to store"
       (reset-store!)
@@ -41,4 +46,6 @@
                    :from "09:00"
                    :to "18:00"})
       (count (get-all-stands)) => 1
-      (:city (first (get-all-stands))) => "Beograd")
+      (:city (first (get-all-stands))) => "Beograd"
+      (:id (first (get-all-stands))) => 1
+      (:address (find-stand 1)) => "Knez Mihailova 15")

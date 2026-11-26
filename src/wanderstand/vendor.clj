@@ -28,7 +28,8 @@
 
 (defn post-stand [stand-data]
   (valid-stand? stand-data)
-  {:vendor-id (:vendor-id stand-data)
+  {:id (:id stand-data)
+   :vendor-id (:vendor-id stand-data)
    :address (:address stand-data)
    :city (:city stand-data)
    :category (:category stand-data)

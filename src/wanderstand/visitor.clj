@@ -16,11 +16,11 @@
       (nil? category) (throw (ex-info "Category is required" {:type :validation-error}))
       :else result)))
 
-(defn get-stand-details [stands vendor-id]
+(defn get-stand-details [stands stand-id]
   (let [result (first (filter (fn [stand]
-                                (= (:vendor-id stand) vendor-id))
+                                (= (:id stand) stand-id))
                               stands))]
     (cond
-      (nil? vendor-id) (throw (ex-info "Vendor id is required" {:type :validation-error}))
+      (nil? stand-id) (throw (ex-info "Stand id is required" {:type :validation-error}))
       (nil? result) (throw (ex-info "Stand not found" {:type :not-found-error}))
       :else result)))
